@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="pdfclown">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/output/lib/pdfclown-0.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/pdfclown-0.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
