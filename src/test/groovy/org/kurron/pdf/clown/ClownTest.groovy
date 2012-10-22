@@ -148,6 +148,62 @@ class ClownTest extends Specification
         then: "pdf file is created"
     }
 
+    def "tl_unicode"( )
+    {
+        given: "document"
+        File file = new File()
+        Document document = file.document
+
+        when: "page is built"
+        Page page = new Page( document )
+        document.getPages().add( page )
+        PrimitiveComposer composer = new PrimitiveComposer( page )
+        BlockComposer blockComposer = new BlockComposer( composer )
+        final URI uri = getClass().getClassLoader().getResource( "HeiT.ttf" ).toURI()
+        assert uri
+        java.io.File bob = new java.io.File( uri )
+        Font font = Font.get( document, bob )
+        println 'println name = ' + font.name
+        Dimension breakSize = new Dimension( 0, 10 )
+        String[] titles =
+            ["我的朋友問我給了他這個文本"]
+        String[] bodies =
+            ["我的朋友問我給了他這個文本"]
+
+        String[] sources =
+            ["我的朋友問我給了他這個文本"]
+
+        final ted = new Rectangle2D.Double( Margin,
+                                            Margin,
+                                            page.getSize().getWidth() - Margin * 2,
+                                            page.getSize().getHeight() - Margin * 2 )
+
+        blockComposer.begin( ted, AlignmentXEnum.Justify, AlignmentYEnum.Top )
+
+        int length = titles.length
+        for( int index = 0; index < length;  index++ )
+        {
+            composer.setFont( font, 12 );
+            blockComposer.showText( titles[index] );
+            blockComposer.showBreak();
+
+            composer.setFont( font, 11 );
+            blockComposer.showText( bodies[index] );
+            blockComposer.showBreak( AlignmentXEnum.Right );
+
+            composer.setFont( font, 8 );
+            blockComposer.showText( "[Source: " + sources[index] + "]" );
+            blockComposer.showBreak( breakSize, AlignmentXEnum.Justify );
+        }
+
+        blockComposer.end()
+        composer.flush()
+
+        serialize( file, "tl-chinese-traditional", false, "Unicode", "using Unicode fonts" )
+
+        then: "pdf file is created"
+    }
+
     protected void serialize( File file,
                               String fileName,
                               boolean chooseMode,

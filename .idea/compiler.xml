@@ -15,6 +15,7 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
       <entry name="?*.TTF" />
+      <entry name="?*.ttf" />
     </wildcardResourcePatterns>
     <annotationProcessing enabled="false" useClasspath="true" />
   </component>
